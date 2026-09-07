@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Family</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .slideshow-container {
+      max-width: 750px;
+      position: relative;
+      margin: 30px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      background-color: #111;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 480px;
+      object-fit: contain; /* Shows the full picture without cutting */
+      display: block;
+      background-color: #111;
+    }
+
+    .slide.active {
+      display: block;
+      animation: fade 0.7s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+
+    /* Arrow buttons */
+    .prev, .next-slide {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px 18px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      background-color: rgba(0, 0, 0, 0.45);
+      border-radius: 0 6px 6px 0;
+      user-select: none;
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .next-slide {
+      right: 0;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .prev:hover, .next-slide:hover {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+
+    /* Dots */
+    .dots {
+      text-align: center;
+      margin: 18px 0 10px;
+    }
+
+    .dot {
+      height: 13px;
+      width: 13px;
+      margin: 0 6px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background-color: #e88d0e;
+      transform: scale(1.2);
+    }
+
+    /* Edit button */
+    .edit-btn {
+      background-color: #28a745 !important;
+      margin-right: 12px;
+    }
+
+    .edit-btn:hover {
+      background-color: #218838 !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Family</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="friends.html">Friends</a>
+    <a href="family.html">Family</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h2>Family Moments</h2>
+    <p>Family is everything. Here are some special moments.</p>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+      <div class="slide active">
+        <img src="images/picture6.jpg" alt="Family photo 1">
+      </div>
+      <div class="slide">
+        <img src="images/picture7.jpg" alt="Family photo 2">
+      </div>
+      </div>
+      <div class="slide">
+        <img src="images/picture9.jpg" alt="Family photo 4">
+      </div>
+      </div>
+      <div class="slide">
+        <img src="images/picture19.jpg" alt="Family photo 4">
+      </div>
+
+
+
+
+      <div class="slide">
+        <img src="images/picture8.jpg" alt="Family photo 3">
+      </div>
+      <div class="slide">
+        <img src="images/picture9.jpg" alt="Family photo 4">
+      </div>
+      <div class="slide">
+        <img src="images/picture10.jpg" alt="Family photo 5">
+      </div>
+      <div class="slide">
+        <img src="images/picture14.jpg" alt="Family photo 6">
+      </div>
+      <div class="slide">
+        <img src="images/picture16.jpg" alt="Family photo 7">
+      </div>
+
+      <!-- Arrows -->
+      <a class="prev" onclick="changeSlide(-1)">❮</a>
+      <a class="next-slide" onclick="changeSlide(1)">❯</a>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots">
+      <span class="dot active" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+      <span class="dot" onclick="currentSlide(5)"></span>
+      <span class="dot" onclick="currentSlide(6)"></span>
+      <span class="dot" onclick="currentSlide(7)"></span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="page-nav">
+      <a href="friends.html" class="btn btn-secondary">← Back to Friends</a>
+
+      <div>
+        <button class="btn edit-btn" onclick="editPage()">Edit</button>
+        <a href="media.html" class="btn">Next → Media</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Nthuna Jordan</p>
+  </footer>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      if (index >= slides.length) currentIndex = 0;
+      if (index < 0) currentIndex = slides.length - 1;
+
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+
+    function changeSlide(step) {
+      currentIndex += step;
+      showSlide(currentIndex);
+    }
+
+    function currentSlide(n) {
+      currentIndex = n - 1;
+      showSlide(currentIndex);
+    }
+
+    // Optional: Auto slideshow (uncomment if you want it)
+    // setInterval(() => changeSlide(1), 4000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Friends</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    header {
+      background: linear-gradient(135deg, #e88d0e, #f5a623);
+      padding: 35px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.3rem;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    main h2 {
+      text-align: center;
+      color: #e88d0e;
+      font-size: 1.9rem;
+      margin-bottom: 20px;
+    }
+
+    .friends-list {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: 0 auto 30px;
+    }
+
+    .friends-list li {
+      background: white;
+      margin-bottom: 12px;
+      padding: 14px 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      font-size: 1.1rem;
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+      max-width: 750px;
+      position: relative;
+      margin: 30px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      background-color: #111;
+    }
+
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 480px;
+      object-fit: contain; /* Full picture - nothing is cut */
+      display: block;
+      background-color: #111;
+    }
+
+    .slide.active {
+      display: block;
+      animation: fade 0.7s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0.4; }
+      to { opacity: 1; }
+    }
+
+    .prev, .next-slide {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px 18px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      background-color: rgba(0, 0, 0, 0.45);
+      border-radius: 0 6px 6px 0;
+      user-select: none;
+      transition: 0.3s;
+      z-index: 10;
+    }
+
+    .next-slide {
+      right: 0;
+      border-radius: 6px 0 0 6px;
+    }
+
+    .prev:hover, .next-slide:hover {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+
+    .dots {
+      text-align: center;
+      margin: 20px 0 10px;
+    }
+
+    .dot {
+      height: 13px;
+      width: 13px;
+      margin: 0 6px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .dot.active {
+      background-color: #e88d0e;
+      transform: scale(1.2);
+    }
+
+    .edit-btn {
+      background-color: #28a745 !important;
+      margin-right: 12px;
+    }
+
+    .edit-btn:hover {
+      background-color: #218838 !important;
+    }
+
+    .page-nav {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Friends & Connections</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="friends.html">Friends</a>
+    <a href="family.html">Family</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h2>Friends</h2>
+
+    <ul class="friends-list">
+      <li>Friend 1 – Always supportive</li>
+      <li>Friend 2 – Great sense of humour</li>
+      <li>Friend 3 – Loyal and kind</li>
+      <li>Friend 4 – Motivates me every day</li>
+    </ul>
+
+    <!-- Slideshow -->
+    <div class="slideshow-container">
+      <div class="slide active">
+        <img src="images/picture3.jpg" alt="Friend 1">
+      </div>
+      <div class="slide">
+        <img src="images/picture4.jpg" alt="Friend 2">
+      </div>
+      <div class="slide">
+        <img src="images/picture5.jpg" alt="Friend 3">
+      </div>
+      <div class="slide">
+        <img src="images/picture1.jpg" alt="Friend 4">
+      </div>
+
+      <a class="prev" onclick="changeSlide(-1)">❮</a>
+      <a class="next-slide" onclick="changeSlide(1)">❯</a>
+    </div>
+
+    <div class="dots">
+      <span class="dot active" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="page-nav">
+      <a href="index.html" class="btn btn-secondary">← Back to Home</a>
+
+      <div>
+        <button class="btn edit-btn" onclick="editPage()">Edit</button>
+        <a href="family.html" class="btn">Next → Family</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Nthuna Jordan</p>
+  </footer>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(index) {
+      if (index >= slides.length) currentIndex = 0;
+      if (index < 0) currentIndex = slides.length - 1;
+
+      slides.forEach(slide => slide.classList.remove('active'));
+      dots.forEach(dot => dot.classList.remove('active'));
+
+      slides[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+    }
+
+    function changeSlide(step) {
+      currentIndex += step;
+      showSlide(currentIndex);
+    }
+
+    function currentSlide(n) {
+      currentIndex = n - 1;
+      showSlide(currentIndex);
+    }
+
+    function editPage() {
+      alert("Edit button clicked! You can later connect this to a real edit page.");
+    }
+  </script>
+</body>
+</html>
+

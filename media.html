@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media & Links</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .edit-btn {
+      background-color: #28a745 !important;
+      margin-right: 10px;
+    }
+    .edit-btn:hover {
+      background-color: #218838 !important;
+    }
+
+    .save-btn {
+      background-color: #007bff !important;
+      margin-right: 10px;
+      display: none;
+    }
+    .save-btn:hover {
+      background-color: #0056b3 !important;
+    }
+
+    .cancel-btn {
+      background-color: #6c757d !important;
+      display: none;
+    }
+
+    .add-btn {
+      background-color: #17a2b8 !important;
+      margin-right: 10px;
+      display: none;
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+
+    .contact-list li {
+      background: #fff;
+      margin-bottom: 12px;
+      padding: 12px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-list input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 15px;
+    }
+
+    .remove-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      display: none;
+    }
+    .remove-btn:hover {
+      background: #c82333;
+    }
+
+    .success-message {
+      display: none;
+      background-color: #d4edda;
+      color: #155724;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin: 20px auto;
+      max-width: 500px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .page-nav {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Media & Links</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="friends.html">Friends</a>
+    <a href="family.html">Family</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h2>Connect with me</h2>
+
+    <div id="successMessage" class="success-message">
+      Changes saved successfully!
+    </div>
+
+    <ul class="contact-list" id="linksList">
+      <li>
+        <span class="item-text">Facebook: https://www.facebook.com/</span>
+        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+      </li>
+      <li>
+        <span class="item-text">WhatsApp: +27 63 967 0583</span>
+        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+      </li>
+      <li>
+        <span class="item-text">Email: nthuna67@gmail.com</span>
+        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+      </li>
+      <li>
+        <span class="item-text">Email: nthuna.jordan@lindamahle.tech</span>
+        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+      </li>
+      <li>
+        <span class="item-text">TikTok: @nthunajordan</span>
+        <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+      </li>
+    </ul>
+
+    <!-- Buttons -->
+    <div class="page-nav">
+      <a href="family.html" class="btn btn-secondary">← Back to Family</a>
+
+      <div>
+        <button class="btn edit-btn" id="editBtn" onclick="startEdit()">Edit</button>
+        <button class="btn add-btn" id="addBtn" onclick="addNewItem()">+ Add New</button>
+        <button class="btn save-btn" id="saveBtn" onclick="saveChanges()">Save</button>
+        <button class="btn cancel-btn" id="cancelBtn" onclick="cancelEdit()">Cancel</button>
+        <a href="contact.html" class="btn">Next → Contact</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Nthuna Jordan</p>
+  </footer>
+
+  <script>
+    let originalHTML = "";
+
+    function startEdit() {
+      originalHTML = document.getElementById("linksList").innerHTML;
+
+      const items = document.querySelectorAll("#linksList li");
+      items.forEach(li => {
+        const text = li.querySelector(".item-text").innerText;
+        li.innerHTML = `
+          <input type="text" value="${text}">
+          <button class="remove-btn" onclick="removeItem(this)" style="display:inline-block">Remove</button>
+        `;
+      });
+
+      // Show/hide buttons
+      document.getElementById("editBtn").style.display = "none";
+      document.getElementById("addBtn").style.display = "inline-block";
+      document.getElementById("saveBtn").style.display = "inline-block";
+      document.getElementById("cancelBtn").style.display = "inline-block";
+    }
+
+    function addNewItem() {
+      const ul = document.getElementById("linksList");
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <input type="text" placeholder="Example: Instagram: @yourname" value="">
+        <button class="remove-btn" onclick="removeItem(this)" style="display:inline-block">Remove</button>
+      `;
+      ul.appendChild(li);
+    }
+
+    function removeItem(button) {
+      button.parentElement.remove();
+    }
+
+    function saveChanges() {
+      const items = document.querySelectorAll("#linksList li");
+      items.forEach(li => {
+        const input = li.querySelector("input");
+        if (input) {
+          const value = input.value.trim() || "Empty item";
+          li.innerHTML = `
+            <span class="item-text">${value}</span>
+            <button class="remove-btn" onclick="removeItem(this)">Remove</button>
+          `;
+        }
+      });
+
+      // Show success message
+      const msg = document.getElementById("successMessage");
+      msg.style.display = "block";
+      setTimeout(() => msg.style.display = "none", 3000);
+
+      // Reset buttons
+      document.getElementById("editBtn").style.display = "inline-block";
+      document.getElementById("addBtn").style.display = "none";
+      document.getElementById("saveBtn").style.display = "none";
+      document.getElementById("cancelBtn").style.display = "none";
+    }
+
+    function cancelEdit() {
+      document.getElementById("linksList").innerHTML = originalHTML;
+
+      document.getElementById("editBtn").style.display = "inline-block";
+      document.getElementById("addBtn").style.display = "none";
+      document.getElementById("saveBtn").style.display = "none";
+      document.getElementById("cancelBtn").style.display = "none";
+    }
+  </script>
+</body>
+</html>

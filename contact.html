@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .edit-btn {
+      background-color: #28a745 !important;
+      margin-right: 12px;
+    }
+    .edit-btn:hover {
+      background-color: #218838 !important;
+    }
+
+    .save-btn {
+      background-color: #007bff !important;
+      margin-right: 12px;
+      display: none;
+    }
+    .save-btn:hover {
+      background-color: #0056b3 !important;
+    }
+
+    .cancel-btn {
+      background-color: #6c757d !important;
+      display: none;
+    }
+    .cancel-btn:hover {
+      background-color: #5a6268 !important;
+    }
+
+    .contact-info input {
+      width: 280px;
+      padding: 6px 10px;
+      margin: 4px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .success-message {
+      display: none;
+      background-color: #d4edda;
+      color: #155724;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact Me</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="friends.html">Friends</a>
+    <a href="family.html">Family</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <main>
+    <h2>Send me a message</h2>
+    <form id="contactForm">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+    <h2>Other Ways to Reach Me</h2>
+
+    <div id="successMessage" class="success-message">
+      Changes saved successfully!
+    </div>
+
+    <ul class="contact-info" id="contactList">
+      <li>Phone / WhatsApp: <span id="phone1">+27 63 967 0583</span></li>
+      <li>Phone: <span id="phone2">+27 60 345 6279</span></li>
+      <li>Email: <span id="email1">nthuna67@gmail.com</span></li>
+      <li>Email: <span id="email2">nthuna.jordan@lindamahle.tech</span></li>
+      <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+    </ul>
+
+    <!-- Buttons -->
+    <div class="page-nav">
+      <a href="media.html" class="btn btn-secondary">← Back to Media</a>
+
+      <div>
+        <button class="btn edit-btn" id="editBtn" onclick="startEdit()">Edit</button>
+        <button class="btn save-btn" id="saveBtn" onclick="saveChanges()">Save</button>
+        <button class="btn cancel-btn" id="cancelBtn" onclick="cancelEdit()">Cancel</button>
+        <a href="index.html" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 Nthuna Jordan</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    let originalData = {};
+
+    function startEdit() {
+      // Save original values
+      originalData.phone1 = document.getElementById("phone1").innerText;
+      originalData.phone2 = document.getElementById("phone2").innerText;
+      originalData.email1 = document.getElementById("email1").innerText;
+      originalData.email2 = document.getElementById("email2").innerText;
+
+      // Turn text into input fields
+      document.getElementById("phone1").innerHTML = `<input type="text" id="inputPhone1" value="${originalData.phone1}">`;
+      document.getElementById("phone2").innerHTML = `<input type="text" id="inputPhone2" value="${originalData.phone2}">`;
+      document.getElementById("email1").innerHTML = `<input type="text" id="inputEmail1" value="${originalData.email1}">`;
+      document.getElementById("email2").innerHTML = `<input type="text" id="inputEmail2" value="${originalData.email2}">`;
+
+      // Show/hide buttons
+      document.getElementById("editBtn").style.display = "none";
+      document.getElementById("saveBtn").style.display = "inline-block";
+      document.getElementById("cancelBtn").style.display = "inline-block";
+    }
+
+    function saveChanges() {
+      // Get new values
+      const newPhone1 = document.getElementById("inputPhone1").value;
+      const newPhone2 = document.getElementById("inputPhone2").value;
+      const newEmail1 = document.getElementById("inputEmail1").value;
+      const newEmail2 = document.getElementById("inputEmail2").value;
+
+      // Put the new values back as text
+      document.getElementById("phone1").innerText = newPhone1;
+      document.getElementById("phone2").innerText = newPhone2;
+      document.getElementById("email1").innerText = newEmail1;
+      document.getElementById("email2").innerText = newEmail2;
+
+      // Show success message
+      const msg = document.getElementById("successMessage");
+      msg.style.display = "block";
+      setTimeout(() => {
+        msg.style.display = "none";
+      }, 3000);
+
+      // Reset buttons
+      document.getElementById("editBtn").style.display = "inline-block";
+      document.getElementById("saveBtn").style.display = "none";
+      document.getElementById("cancelBtn").style.display = "none";
+    }
+
+    function cancelEdit() {
+      // Restore original values
+      document.getElementById("phone1").innerText = originalData.phone1;
+      document.getElementById("phone2").innerText = originalData.phone2;
+      document.getElementById("email1").innerText = originalData.email1;
+      document.getElementById("email2").innerText = originalData.email2;
+
+      // Reset buttons
+      document.getElementById("editBtn").style.display = "inline-block";
+      document.getElementById("saveBtn").style.display = "none";
+      document.getElementById("cancelBtn").style.display = "none";
+    }
+  </script>
+</body>
+</html>
